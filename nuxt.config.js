@@ -16,6 +16,7 @@ export default {
       {rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'}
     ]
   },
+  loading: {color: '#409eff'},
   css: [
     'element-ui/lib/theme-chalk/index.css',
     '@/theme/index.scss'
