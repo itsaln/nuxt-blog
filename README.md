@@ -1,6 +1,4 @@
-# Scorp
-
-## This my site portfolio.
+# Nuxt Blog
 
 ### Build Setup
 
@@ -18,4 +16,3 @@ $ npm run start
 # generate static project
 $ npm run generate
 ```
-

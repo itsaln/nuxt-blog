@@ -55,9 +55,37 @@
         }
       }
     },
+    mounted() {
+      const {message} = this.$route.query
+
+      switch (message) {
+        case 'login':
+          this.$message.info('Для начало войдите в систему')
+          break
+        case 'logout':
+          this.$message.success('Вы успешно вышли из системы')
+          break
+      }
+    },
     methods: {
       onSubmit() {
-        console.log('submit')
+        this.$refs.form.validate(async valid => {
+          if (valid) {
+            this.loading = true
+
+            try {
+              const formData = {
+                login: this.controls.login,
+                password: this.controls.password
+              }
+
+              await this.$store.dispatch('auth/login', formData)
+              await this.$router.push('/admin')
+            } catch (e) {
+              this.loading = false
+            }
+          }
+        })
       }
     }
   }
