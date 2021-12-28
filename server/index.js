@@ -1,5 +1,5 @@
 const consola = require('consola')
-const { Nuxt, Builder } = require('nuxt')
+const {Nuxt, Builder} = require('nuxt')
 const app = require('./app')
 
 const config = require('../nuxt.config')
@@ -27,4 +27,5 @@ async function start() {
     })
   })
 }
+
 start()
