@@ -67,6 +67,7 @@
               this.controls.login = ''
               this.controls.password = ''
               this.loading = false
+
             } catch (e) {
               this.loading = false
             }
