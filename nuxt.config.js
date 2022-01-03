@@ -22,17 +22,21 @@ export default {
     '@/theme/index.scss'
   ],
   plugins: [
-    '@/plugins/globals'
+    '@/plugins/globals',
+    '@/plugins/axios'
   ],
   components: true,
   buildModules: [],
   modules: [
-    '@nuxtjs/axios',
+    '@nuxtjs/axios'
   ],
   axios: {
-    baseURL: '/',
+    baseURL: '/'
   },
   build: {
-    transpile: [/^element-ui/],
-  }
+    transpile: [/^element-ui/]
+  },
+  serverMiddleware: [
+    {path: './server', handler: '@/server'}
+  ]
 }
