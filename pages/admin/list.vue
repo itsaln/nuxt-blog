@@ -10,7 +10,7 @@
     <el-table-column label="Дата">
       <template slot-scope="{row: {date}}">
         <i class="el-icon-time"></i>
-        <span style="margin-left: 10px">{{ new Date(date).toLocaleString() }}</span>
+        <span style="margin-left: 10px">{{ date | date('date') }}</span>
       </template>
     </el-table-column>
     <el-table-column label="Просмотры">
@@ -53,6 +53,9 @@
   export default {
     name: 'list',
     layout: 'admin',
+    head: {
+      title: `Все посты | ${process.env.appName}`
+    },
     async asyncData({store}) {
       const posts = await store.dispatch('post/fetchAdmin')
       return {posts}

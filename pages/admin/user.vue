@@ -32,6 +32,9 @@
   export default {
     name: 'user',
     layout: 'admin',
+    head: {
+      title: `Создать пользователя | ${process.env.appName}`
+    },
     data() {
       return {
         loading: false,

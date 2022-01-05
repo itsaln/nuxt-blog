@@ -2,7 +2,7 @@
   <article class="post">
     <header class="post-header">
       <div class="post-title">
-        <h1>Post title</h1>
+        <h1>{{ post.title }}</h1>
         <nuxt-link to="/">
           <i class="el-icon-back"></i>
         </nuxt-link>
@@ -10,37 +10,31 @@
       <div class="post-info">
         <small>
           <i class="el-icon-time"></i>
-          {{ new Date().toLocaleString() }}
+          {{ post.date | date }}
         </small>
         <small>
           <i class="el-icon-view"></i>
-          42
+          {{ post.views }}
         </small>
       </div>
       <div class="post-image">
-        <img src="@/assets/post_001.jpg" alt="">
+        <img :src="post.imageUrl" alt="">
       </div>
     </header>
     <main class="post-content">
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae cumque dignissimos distinctio iste magni odit
-        quidem, similique vel voluptas voluptatibus?</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae cumque dignissimos distinctio iste magni odit
-        quidem, similique vel voluptas voluptatibus?</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae cumque dignissimos distinctio iste magni odit
-        quidem, similique vel voluptas voluptatibus?</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae cumque dignissimos distinctio iste magni odit
-        quidem, similique vel voluptas voluptatibus?</p>
+      <vue-markdown>{{ post.text }}</vue-markdown>
     </main>
     <footer>
       <AppCommentForm
         v-if="canAddComment"
         @created="createCommentHandler"
+        :postId="post._id"
       />
 
-      <div v-if="true" class="comments">
+      <div v-if="post.comments.length" class="comments">
         <AppComment
-          v-for="comment of 4"
-          :key="comment"
+          v-for="comment of post.comments"
+          :key="comment._id"
           :comment="comment"
         />
       </div>
@@ -50,21 +44,34 @@
 </template>
 
 <script>
-  import AppComment from '../../components/main/Comment'
-  import AppCommentForm from '../../components/main/CommentForm'
+  import AppComment from '@/components/main/Comment'
+  import AppCommentForm from '@/components/main/CommentForm'
 
   export default {
     name: 'id',
+    head() {
+      return {
+        title: `${this.post.title} | ${process.env.appName}`
+      }
+    },
     data() {
       return {
         canAddComment: true
+      }
+    },
+    async asyncData({store, params}) {
+      const post = await store.dispatch('post/fetchById', params.id)
+      await store.dispatch('post/addView', post)
+      return {
+        post: {...post, views: ++post.views}
       }
     },
     validate({params}) {
       return Boolean(params.id)
     },
     methods: {
-      createCommentHandler() {
+      createCommentHandler(comment) {
+        this.post.comments.unshift(comment)
         this.canAddComment = false
       }
     },

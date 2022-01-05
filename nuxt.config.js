@@ -33,6 +33,9 @@ export default {
   axios: {
     baseURL: '/'
   },
+  env: {
+    appName: 'SSR Blog'
+  },
   build: {
     transpile: [/^element-ui/]
   },
