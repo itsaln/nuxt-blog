@@ -6,7 +6,7 @@ const User = require('../models/user.model')
 
 const options = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-  secretOrKey: keys.JWT
+  secretOrKey: keys.JWT_SECRET
 }
 
 module.exports = new Strategy(options, async (payload, done) => {

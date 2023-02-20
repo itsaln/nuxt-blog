@@ -14,7 +14,7 @@ module.exports.login = async (req, res) => {
       const token = jwt.sign({
         login: candidate.login,
         userId: candidate._id
-      }, keys.JWT, {expiresIn: 60 * 60})
+      }, keys.JWT_SECRET, {expiresIn: 60 * 60})
       res.json({token})
     } else {
       // Дыра в безопасности
